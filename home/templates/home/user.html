@@ -1,0 +1,140 @@
+{% extends 'home/base.html' %}
+{% load static %}
+
+{% block content %}
+    <header>        
+        <div id="logo">QUEST TRACKER</div>
+    </header>
+
+    <main>
+
+        <div id="shift_menu">
+
+            <i id="menu_icon" class="fa-solid fa-sliders fa-lg" ></i>
+
+            <div id="user_show_user" >
+                <form id="user_logout_form_box" action="{% url 'home' %}">
+                    <button id="user_logout_box_btn" type="submit"><i class="fa-solid fa-arrow-right-from-bracket">&nbsp;Logout</i></button>
+                </form>
+                
+                <i id="user_name" class="fa-solid fa-user">&nbsp;&nbsp;{{logged_user.user_name}}</i>
+               
+            </div>
+
+        </div>
+
+        <ul id="menu_box">
+            <div id="small_logo">
+                <i id="menu_box_close" class="fa-regular fa-circle-xmark" ></i>
+                Quest Tracker
+            </div>
+            <li id="menu_profile_btn">
+                <a href="#">
+                    <i class="fa-solid fa-user"></i>
+                    Profile
+                </a>
+            </li>
+            <li id="menu_tasks_btn">
+                <a href="#">
+                    <i class="fa-solid fa-list-check"></i>
+                    Tasks
+                </a>
+            </li>
+            <li id="menu_settings_btn">
+                <a href="#">
+                    <i class="fa-solid fa-gears"></i>
+                    Settings
+                </a>
+            </li>
+            <li id="menu_logout_btn">
+                <a href="#">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    LogOut
+                </a>
+            </li>
+        </ul>
+
+        
+        <div id="profile_box">
+            <h2>Edit Profile</h2> 
+            <form id="profile_edit_content_form" action="" method="post">
+                {% csrf_token %}
+                <div class="input_group_box">
+                    <label for="edit_user_name">EMPLOYEE NAME</label>
+                    <input class="profile_edit_input_gray" id="edit_user_name" type="text" name="user_name" value="{{logged_user.user_name}}" readonly>
+                </div>
+
+
+                <div class="input_group_box">
+                    <label for="edit_user_dob">DATE OF BIRTH</label>
+                    <input class="profile_edit_input_gray" id="edit_user_dob" type="text" name="user_dob" value="{{logged_user.user_dob}}" readonly>
+
+                </div>
+
+                <div class="input_group_box">
+                    <label for="edit_user_phone">PHONE NUMBER</label>
+                    <input class="profile_edit_input_gray" id="edit_user_phone_0" type="text" name="user_phone_0" value="{{logged_user.user_phone_code}}" readonly>
+                    <input class="profile_edit_input" id="edit_user_phone" type="text" name="user_phone_1" value="{{logged_user.user_phone_number}}" >
+
+                </div>
+
+                <div class="input_group_box">
+                    <label for="edit_user_email">EMAIL</label>
+                    <input class="profile_edit_input" id="edit_user_email" type="text" name="user_email" value="{{logged_user.user_email}}">
+
+                </div>
+
+                <button id="edit_user_submit" type="submit">Submit</button>
+
+            </form>
+            
+        </div>
+
+           
+
+            
+        </div>
+        {% if edit_success %}
+            <div id="edit_success_box">
+                {{ edit_success }}
+                <button id="edit_success_box_close_btn">OK</button>
+
+            </div>
+        {% endif %}
+
+        {% if edit_failed %}
+            <div id="edit_failed_box">
+                {{ edit_failed }}
+                <button id="edit_failed_box_close_btn">OK</button>
+
+            </div>
+        {% endif %}
+
+        <div id="task_box">
+            <div id="task_tab_box">
+                <button id="show_tasks_tab">TASKS</button>
+                <button id="create_task_tab">CREATE TASK</button>
+                <button id="edit_task_tab">EDIT TASK</button>
+            </div>
+            <div id="show_tasks_box">
+                <h2>Yet to be implemented</h2>
+
+            </div>
+            <div id="create_task_box">
+                <h2>Yet to be implemented</h2>
+
+            </div>
+            <div id="edit_task_box">
+                <h2>Yet to be implemented</h2>
+
+            </div>
+
+        </div>
+        
+    </main>
+
+    <footer>
+        <script type="text/javascript" src="{% static 'home/js/user.js' %}"></script>
+    </footer>
+    
+{% endblock %}

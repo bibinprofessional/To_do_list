@@ -1,0 +1,207 @@
+#user_show_user {
+    position: relative;
+    font-size: x-small;
+}
+
+#user_name {
+    position: relative;
+    margin: 10px;
+    color: rgba(0, 102, 255, 0.747);
+}
+
+#user_logout_form_box {
+    position: absolute;
+    width: fit-content;
+    height: fit-content;
+    top: -1000px;
+    background-color: rgba(52, 53, 53, 0.205);
+    padding: 3px;
+    display: block;
+    box-shadow: 0 0 6px rgb(230, 230, 230);
+    visibility: hidden;
+
+}
+
+#user_logout_box_btn {
+    background-color: rgba(52, 53, 53, 0.205);
+    border: none;
+}
+
+#user_name:hover,
+#user_logout_form_box:hover,
+#profile_verify_box button:hover {
+    cursor: pointer;
+    transform: scale(1.12);
+}
+
+#profile_box,
+#task_box {
+    position: absolute;
+    height: fit-content;
+    width: fit-content;
+    min-width: 90vw;
+    min-height: 85vh;
+    left: 5vw;
+    top: 10vh;
+    background-color: rgba(52, 53, 53, 0.205);
+    box-shadow: 0 0 6px rgb(230, 230, 230);
+
+}
+
+#task_box {
+    visibility: visible;
+}
+
+#profile_box {
+    top: -1000px;
+    visibility: hidden;
+}
+
+#task_tab_box {
+    width: fit-content;
+    height: fit-content;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    background-color: rgba(52, 53, 53, 0.205);
+    box-shadow: 0 0 6px rgb(230, 230, 230);
+    color: white;
+
+}
+
+#show_tasks_tab {
+    display: inline-block;
+    padding: 15px;
+    color: white;
+    background-color: #00000059;
+
+
+}
+
+#create_task_tab {
+    padding: 15px;
+    display: inline-block;
+    color: white;
+    background-color: #34353534;
+
+}
+
+#edit_task_tab {
+    padding: 15px;
+    display: inline-block;
+    color: white;
+    background-color: #34353534;
+
+}
+
+#show_tasks_box,
+#create_task_box,
+#edit_task_box {
+    margin-top: 15px;
+    height: fit-content;
+    width: fit-content;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(52, 53, 53, 0.205);
+    box-shadow: 0 0 6px rgb(230, 230, 230);
+    position: absolute;
+}
+
+#show_tasks_box {
+    top: 30%;
+    visibility: visible;
+}
+
+#create_task_box {
+    top: -1000px;
+    visibility: hidden;
+}
+
+#edit_task_box {
+    top: -1000px;
+    visibility: hidden;
+}
+
+.profile_edit_input_gray {
+    background-color: rgba(165, 160, 160, 0.582);
+    height: 40px;
+}
+
+.profile_edit_input_gray:hover {
+    cursor: not-allowed;
+}
+
+.profile_edit_input {
+    background-color: white;
+    height: 40px;
+}
+
+
+#profile_edit_content_form {
+    position: relative;
+    height: fit-content;
+    width: fit-content;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+#edit_user_submit {
+    position: relative;
+    background-color: #ffffffca;
+    box-shadow: 0 0 4px rgba(255, 255, 255, 0.785);
+    border: none;
+    padding: 10px;
+    margin: 5px;
+    color: #0d0000;
+    font-family: cursive;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+#edit_user_submit:hover,
+#show_tasks_tab:hover,
+#create_task_tab:hover,
+#edit_task_tab:hover,
+#edit_success_box_close_btn:hover,
+#edit_failed_box_close_btn:hover {
+    cursor: pointer;
+    transform: scale(1.12);
+}
+
+#edit_user_submit:hover {
+    left: 43%;
+}
+
+
+#edit_success_box,
+#edit_failed_box {
+    background: rgb(255, 255, 255);
+    position: absolute;
+    width: fit-content;
+    height: fit-content;
+    font-size: large;
+    font-family: cursive;
+    padding: 20px 30px 10px 30px;
+    top: 40vh;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    visibility: visible;
+    z-index: 1;
+
+}
+
+
+#edit_success_box_close_btn,
+#edit_failed_box_close_btn {
+
+    display: block;
+    background-color: #676565;
+    color: #ffffff;
+    margin-left: 80%;
+    box-shadow: 0 0 6px rgb(46, 46, 46);
+    border: none;
+    padding: 10px;
+    margin-top: 20px;
+    font-family: cursive;
+
+}
