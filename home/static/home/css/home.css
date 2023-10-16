@@ -182,6 +182,7 @@ h2 {
 
 
 
+
 #login_title,
 #register_title {
     display: inline-block;
@@ -239,18 +240,17 @@ input {
 #register_submit:hover,
 #registered_success_box_close_btn:hover,
 #registered_failed_box_close_btn:hover,
-#login_success_box_close_btn:hover,
 #login_failed_box_close_btn:hover {
     cursor: pointer;
     transform: scale(1.2);
 }
 
 #login_submit:hover {
-    left: 38%;
+    left: 42%;
 }
 
 #login_box_close:hover {
-    left: 94%;
+    left: 96%;
 }
 
 #register_submit:hover {
@@ -274,19 +274,8 @@ label {
     width: fit-content;
 }
 
-#id_user_phone_number_0,
-#edit_user_phone_0 {
-    width: 100px;
-}
-
-#id_user_phone_number_1,
-#edit_user_phone {
-    width: 150px;
-}
-
 #registered_success_box,
 #registered_failed_box,
-#login_success_box,
 #login_failed_box {
     background: rgb(255, 255, 255);
     position: absolute;
@@ -307,7 +296,6 @@ label {
 
 #registered_success_box_close_btn,
 #registered_failed_box_close_btn,
-#login_success_box_close_btn,
 #login_failed_box_close_btn {
 
     display: block;

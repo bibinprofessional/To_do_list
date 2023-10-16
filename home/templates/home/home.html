@@ -62,16 +62,23 @@
             <h2 id="login_title">Login</h2>
             <form action="" method="post" id="login_form">
                 {% csrf_token %}
-                {% for form_field in login_form %}
-
-                    <div class="input_group_box">
-                        <div class="input_group">
-                            <i class="fa-solid fa-{{form_field.field.icon}}"></i>
-                            {{form_field}}
-                        </div>
+                <div class="input_group_box">
+                    <label for="username">Username</label>
+                    <div class="input_group">
+                        <i class="fa-solid fa-user"></i>
+                        <input type="text" id="login_username" name="username" placeholder="Username" required>
                     </div>
-                    
-                {% endfor %}
+                </div>
+
+                <div class="input_group_box">
+                    <label for="password">Password</label>
+                    <div class="input_group">
+                        <i class="fa-solid fa-lock"></i>
+                        <input type="password" id="login_password" name="password" placeholder="Password" required>
+                    </div>
+                </div>
+                
+                
                 <button id="login_submit" type="submit">Submit</button>
 
             </form>
@@ -85,34 +92,30 @@
             <h2 id="register_title">Register</h2>
             <form action="" method="post" id="form_register">
                 {% csrf_token %}
-                {% for form_field in register_form %}
-                {% if form_field.name != "user_phone_number" %}
-                    <div class="input_group_box">
-                        <label for="id_{{form_field.name}}">{{form_field.label}}</label>
-                        <div class="input_group">
-                            <i class="fa-solid fa-{{form_field.field.icon}}"></i>
-                            {{form_field}}
-                        </div>
-                    </div>
-                {% else %}
-                    <div class="input_group_box">
-                        <label for="id_{{form_field.name}}_1">{{form_field.label}}</label>
-                        <div class="input_group">
-                            <i class="fa-solid fa-{{form_field.field.icon}}"></i>
-                            {{form_field}}
-                        </div>
-                    </div>
-                
-                {% endif %}                
-                {% endfor %}
-
                 <div class="input_group_box">
-                    <label for="id_user_con_password">CONFIRM PASSWORD</label>
+                    <label for="username">Username</label>
                     <div class="input_group">
-                        <i class="fa-solid fa-key"></i>
-                        <input type="password" name="user_con_password" id="id_user_con_password" placeholder="Confirm Password" required>
+                        <i class="fa-solid fa-user"></i>
+                        <input type="text" id="username" name="username" placeholder="Username" required>
                     </div>
                 </div>
+
+                <div class="input_group_box">
+                    <label for="password">Password</label>
+                    <div class="input_group">
+                        <i class="fa-solid fa-lock"></i>
+                        <input type="password" id="password" name="password" placeholder="Password" required>
+                    </div>
+                </div>
+
+                <div class="input_group_box">
+                    <label for="con_password">Confirm Password</label>
+                    <div class="input_group">
+                        <i class="fa-solid fa-key"></i>                        
+                        <input type="password" id="con_password" name="con_password" placeholder="Confirm Password" required>
+                    </div>
+                </div>
+
                 <button id="register_submit" type="submit">Submit</button>
 
             </form>
@@ -136,14 +139,7 @@
             </div>
         {% endif %}
 
-        {% if login_success %}
-            <div id="login_success_box">
-                {{ login_success }}
-                <form action="{% url 'user' logged_user_id %}">
-                    <button id="login_success_box_close_btn" type="submit">OK</button>
-                </form>
-            </div>
-        {% endif %}
+        
 
         {% if login_failed %}
             <div id="login_failed_box">

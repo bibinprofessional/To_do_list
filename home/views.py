@@ -1,112 +1,147 @@
-from django.shortcuts import render
-from .forms import LoginForm , RegisterForm
-from .models import Users
+from django.shortcuts import render,redirect
+# from .forms import LoginForm , RegisterForm
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate,login
+from .models import Tasks
+from .forms import TaskCreateForm
 from django.http import HttpResponse
-from phonenumber_field.phonenumber import PhoneNumber
-
 
 def home(request):
-    login_form=LoginForm()
-    register_form=RegisterForm()
-    context= {'login_form':login_form,'register_form':register_form}
-
+    context={}
     if request.method=='POST':
         if len(request.POST)==3:
-            
-            email = request.POST.get('user_email')
-            password = request.POST.get('user_password')
+            username=request.POST.get('username')
+            password=request.POST.get('password')
 
-            logged_user=Users.objects.filter(user_email=email, user_password=password)
+            user = authenticate(username=username, password=password)
 
-            if logged_user.exists():
-                context2={'logged_user_id':logged_user[0].auto_increment_id,'login_success':'Login Successfull !!!'}
-                context.update(context2)
-                return render(request,'home/home.html',context)
-            
-            else:
+            if user is None:
                 context['login_failed']='Invalid Credentials !!!'
                 return render(request,'home/home.html',context)
             
+            else:
+                login(request, user)
+                return redirect('login_confirmation')
+
+
         else:
-            register_form=RegisterForm(request.POST)
+            username=request.POST.get('username')
+            password=request.POST.get('password')
 
-            name = request.POST.get('user_name')
-            dob = request.POST.get('user_dob')
-            phone_0 = request.POST.get('user_phone_number_0')
-            phone_1 = request.POST.get('user_phone_number_1')
-            email = request.POST.get('user_email')
-            password = request.POST.get('user_password')
-
-            number=PhoneNumber.from_string(phone_1,region=phone_0)
-
-            if not number.is_valid():
-                context['registered_failed']='Registration Failed !!! Invalid Phone Number.'
-                return render(request,'home/home.html',context)
-            
-            elif Users.objects.filter(user_phone_number=phone_1).exists():
-                context['registered_failed']='Registration Failed !!! Employee Phone Number already exists.'
-                return render(request,'home/home.html',context)
-            
-            elif Users.objects.filter(user_email=email).exists():
+            if User.objects.filter(username=username).exists():
                 context['registered_failed']='Registration Failed !!! Employee Email already exists.'
                 return render(request,'home/home.html',context)
             
             else:
                 
                 try:
-                    user=Users(user_name=name,user_dob=dob,user_phone_code=phone_0,user_phone_number=phone_1,user_email=email,user_password=password)
+                    user = User.objects.create_user(username,'', password)
                     user.save()
                     context['registered_success']='Registration Successfull !!!'
                     return render(request,'home/home.html',context)
                 except:
                     context['registered_failed']='Registration Failed !!! Try again.'
                     return render(request,'home/home.html',context)
+                
+    return render(request,'home/home.html')
 
 
-    return render(request,'home/home.html',context)
+def login_confirmation(request):
+    context={}
+    context['login_success']='Login Successfull !!!'
+    if request.method=='POST':
+        return redirect('user')
+    return render(request, 'home/user.html',context)
 
-def user(request,logged_user_id):
-    logged_user=Users.objects.get(auto_increment_id=logged_user_id)
-    context3={'logged_user':logged_user}
+
+def user(request):
+    context={}
+    context['task_box']=True
+
+    task=Tasks.objects.filter(user=request.user)
+    context['task']=task
+
+    create_form=TaskCreateForm()
+    context['create_form']=create_form
+
+    count=task.filter(complete=False).count()
+    context['count']=count
+
+    search_input = request.GET.get('search-area') or ''
+    if search_input:
+        context['task'] = context['task'].filter(title__contains=search_input)
+
+        context['search_input'] = search_input
 
     if request.method=='POST':
-        phone_0 = request.POST.get('user_phone_0')
-        phone_1 = request.POST.get('user_phone_1')
-        email = request.POST.get('user_email')
 
-        number=PhoneNumber.from_string(phone_1,region=phone_0)
+        title = request.POST.get('title')
+        description = request.POST.get('description')
+        priority = request.POST.get('priority')
+        complete = request.POST.get('complete')
 
-        if not number.is_valid():
-            context3['edit_failed']='Editing Profile Failed !!! Invalid Phone Number.'
-            return render(request,'home/user.html',context3)
+        if complete is None:
+            complete=False
+        else:
+            complete=True
 
-        elif Users.objects.filter(user_phone_number=phone_1).exists() and logged_user.user_phone_number!=phone_1:
-            context3['edit_failed']='Editing Profile Failed !!! Employee Phone Number already exists.'
-            return render(request,'home/user.html',context3)
-        
-        elif Users.objects.filter(user_email=email).exists() and logged_user.user_email!=email:
-            context3['edit_failed']='Editing Profile Failed !!! Employee Email already exists.'
-            return render(request,'home/user.html',context3)
+        new_task=Tasks(user=request.user,title=title,description=description,priority=priority,complete=complete)
+        new_task.save()
+        return redirect('create_task_confirmation')
+   
+    return render(request,'home/user.html',context)
+
+def create_task_confirmation(request):
+    context={}
+    context['create_task_success']='Task Created Successfully !!!'
+    if request.method=='POST':
+        return redirect('user')
+    return render(request,'home/user.html',context)
+
+
+def mark_complete(request,task_id):
+    task=Tasks.objects.get(pk=task_id)
+    if task.complete==True:
+        task.complete=False
+        task.save()
+
+    else:
+        task.complete=True
+        task.save()
+    
+    return redirect('user')
+
+def task_details(request,task_id):
+    task=Tasks.objects.get(pk=task_id)
+    context={}
+    context['edit_task']=task
+    if request.method=='POST':
+        if len(request.POST)==1:
+            return redirect('user')
         
         else:
-            try:
-                logged_user.emp_phone_number=phone_1
-                logged_user.emp_email=email
-                logged_user.save()
-                context3['edit_success']='Editing Profile Successfull !!!'
-                return render(request,'home/user.html',context3)
-            
-            except:
-                context3['edit_failed']='Editing Profile Failed !!!'
-                return render(request,'home/user.html',context3)
+            task.delete()
 
+            edit_title = request.POST.get('edit_title')
+            edit_description = request.POST.get('edit_description')
+            edit_priority = request.POST.get('edit_priority')
+            edit_complete = request.POST.get('edit_complete')
 
-    return render(request,'home/user.html',context3)
+            if edit_complete is None:
+                edit_complete=False
+            else:
+                edit_complete=True
 
-    
-    
-    
-
+            edit_task=Tasks(user=request.user,title=edit_title,description=edit_description,priority=edit_priority,complete=edit_complete)
+            edit_task.save()
+            return redirect('user')
 
     
-    
+    return render(request,'home/user.html',context)
+
+def task_delete(request,task_id):
+    task=Tasks.objects.get(pk=task_id)
+    task.delete()
+    return redirect('user')
+
+

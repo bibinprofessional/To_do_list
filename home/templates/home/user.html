@@ -17,7 +17,7 @@
                     <button id="user_logout_box_btn" type="submit"><i class="fa-solid fa-arrow-right-from-bracket">&nbsp;Logout</i></button>
                 </form>
                 
-                <i id="user_name" class="fa-solid fa-user">&nbsp;&nbsp;{{logged_user.user_name}}</i>
+                <i id="user_name" class="fa-solid fa-user">&nbsp;&nbsp;{{request.user.username}}</i>
                
             </div>
 
@@ -54,82 +54,156 @@
             </li>
         </ul>
 
-        
-        <div id="profile_box">
-            <h2>Edit Profile</h2> 
-            <form id="profile_edit_content_form" action="" method="post">
+        {% if login_success %}
+            <form id="login_success_box" name="login_success_box" method="post" action="">
                 {% csrf_token %}
-                <div class="input_group_box">
-                    <label for="edit_user_name">EMPLOYEE NAME</label>
-                    <input class="profile_edit_input_gray" id="edit_user_name" type="text" name="user_name" value="{{logged_user.user_name}}" readonly>
-                </div>
-
-
-                <div class="input_group_box">
-                    <label for="edit_user_dob">DATE OF BIRTH</label>
-                    <input class="profile_edit_input_gray" id="edit_user_dob" type="text" name="user_dob" value="{{logged_user.user_dob}}" readonly>
-
-                </div>
-
-                <div class="input_group_box">
-                    <label for="edit_user_phone">PHONE NUMBER</label>
-                    <input class="profile_edit_input_gray" id="edit_user_phone_0" type="text" name="user_phone_0" value="{{logged_user.user_phone_code}}" readonly>
-                    <input class="profile_edit_input" id="edit_user_phone" type="text" name="user_phone_1" value="{{logged_user.user_phone_number}}" >
-
-                </div>
-
-                <div class="input_group_box">
-                    <label for="edit_user_email">EMAIL</label>
-                    <input class="profile_edit_input" id="edit_user_email" type="text" name="user_email" value="{{logged_user.user_email}}">
-
-                </div>
-
-                <button id="edit_user_submit" type="submit">Submit</button>
-
+                {{ login_success }}
+                <button id="login_success_box_close_btn" type="submit">OK</button>
             </form>
-            
-        </div>
-
-           
-
-            
-        </div>
-        {% if edit_success %}
-            <div id="edit_success_box">
-                {{ edit_success }}
-                <button id="edit_success_box_close_btn">OK</button>
-
-            </div>
         {% endif %}
+        {% if task_box %}
+            <div id="task_box">
+                <h2>Hello {{request.user.username}}</h2>
+                <h3>You have {{count}} incomplete task</h3>
+                <div id="search_add_box">
+                    <form method="get" id="search_task_form">
+                        <input type='text' id="search_area" name='search-area' placeholder="Search your task" value="{{search_input}}">
+                        <i id="search_icon" class="fa-brands fa-searchengin"></i>
+                    </form>
+                    <i id="add_icon" class="fa-solid fa-plus"></i>
+                </div>
 
-        {% if edit_failed %}
-            <div id="edit_failed_box">
-                {{ edit_failed }}
-                <button id="edit_failed_box_close_btn">OK</button>
-
-            </div>
-        {% endif %}
-
-        <div id="task_box">
-            <div id="task_tab_box">
-                <button id="show_tasks_tab">TASKS</button>
-                <button id="create_task_tab">CREATE TASK</button>
-                <button id="edit_task_tab">EDIT TASK</button>
-            </div>
-            <div id="show_tasks_box">
-                <h2>Yet to be implemented</h2>
-
+                {% if task %}
+                    <table>
+                        {% for item in task %}
+                            <tr>
+                                {% if item.complete %}
+                                    <td><a id="com_task_check" href="{% url 'mark_complete' item.id %}"></a></td>
+                                    <td><a id="com_task_title" href="{% url 'task_details' item.id %}">{{item.title}}</a></td>
+                                {% else %}
+                                    <td><a id="task_check" href="{% url 'mark_complete' item.id %}"></a></td>
+                                    <td><a id="task_title" href="{% url 'task_details' item.id %}">{{item.title}}</a></td>
+                                {% endif %}
+                                
+                                <td><a href="{% url 'task_delete' item.id %}">&#215;</a></td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                {% else %}
+                    <div id="empty_task">
+                        <h2>No new tasks are created.</h2>
+                        <h3>Create a New task</h3>
+                    </div>
+                {% endif %}
+                
             </div>
             <div id="create_task_box">
-                <h2>Yet to be implemented</h2>
+
+                <i id="create_task_box_close" class="fa-solid fa-circle-xmark"></i>                
+                <h2 id="create_task_title">Create Task</h2>
+
+                <form action="" method="post" id="form_create_task">
+                    {% csrf_token %}
+                    {% for form_field in create_form %}
+                        <div class="input_group_box">
+                            <label for="id_{{form_field.name}}">{{form_field.label}}</label>
+                            <div class="input_group">
+                                {{form_field}}
+                            </div>
+                        </div>                
+                    {% endfor %}
+                    <button id="create_form_submit" type="submit">Submit</button>
+    
+                </form>
+
 
             </div>
+        {% endif%}
+
+        {% if create_task_success %}
+            <form id="create_task_success_box" name="create_task_success_box" method="post" action="">
+                {% csrf_token %}
+                {{ create_task_success }}
+                <button id="create_task_success_box_close_btn" type="submit">OK</button>
+            </form>
+        {% endif %}
+
+        {% if edit_task %}
             <div id="edit_task_box">
-                <h2>Yet to be implemented</h2>
+
+                <form action="" method="post" id="form_edit_task_close">
+                    {% csrf_token %}
+                    <i id="edit_task_box_close" class="fa-solid fa-circle-xmark"></i> 
+                </form>
+                               
+                <h2 id="edit_task_title">Edit Task</h2>
+
+                <form action="" method="post" id="form_edit_task">
+                    {% csrf_token %}                    
+                    <div class="input_group_box">
+                        <label for="id_edit_title">Title</label>
+                        <div class="input_group">
+                            <input type="text" name="edit_title" maxlength="150" value="{{edit_task.title}}" required="" id="id_edit_title">
+                        </div>
+                    </div>                
+                
+                    <div class="input_group_box">
+                        <label for="id_edit_description">Description</label>
+                        <div class="input_group">
+                            <textarea name="edit_description" cols="40" rows="10" id="id_edit_description">{{edit_task.description}}</textarea>
+                        </div>
+                    </div>                
+                
+                    <div class="input_group_box">
+                        <label for="id_edit_priority">Task Priority</label>
+                        <div class="input_group">
+                            <select name="edit_priority" id="id_edit_priority">
+                                <option value="{{edit_task.priority}}" selected>{{edit_task.priority}}</option>
+                                <option value="1" >1</option>
+
+                                <option value="2">2</option>
+
+                                <option value="3">3</option>
+
+                                <option value="4">4</option>
+
+                                <option value="5">5</option>
+
+                                <option value="6">6</option>
+
+                                <option value="7">7</option>
+
+                                <option value="8">8</option>
+
+                                <option value="9">9</option>
+
+                                <option value="10">10</option>
+                            </select>
+                        </div>
+                    </div>                
+                
+                    <div class="input_group_box">
+                        <label for="id_edit_complete">Mark Completed</label>
+                        <div class="input_group">
+                            {% if edit_task.complete %}
+                                <input type="checkbox" name="edit_complete" id="id_edit_complete" checked>
+                            {% else %}
+                                <input type="checkbox" name="edit_complete" id="id_edit_complete">
+                            {% endif %}
+        
+                        </div>
+                    </div>                
+                    
+                    <button id="edit_form_submit" type="submit">Submit</button>
+    
+                </form>
+                <br>
+
+                Time created :{{edit_task.created}}
 
             </div>
+        {% endif %}
 
-        </div>
         
     </main>
 

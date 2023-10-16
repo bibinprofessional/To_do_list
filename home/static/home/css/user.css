@@ -27,126 +27,184 @@
     border: none;
 }
 
+#login_success_box,
+#create_task_success_box {
+    background: rgb(255, 255, 255);
+    position: absolute;
+    width: fit-content;
+    height: fit-content;
+    font-size: large;
+    font-family: cursive;
+    padding: 20px 30px 10px 30px;
+    top: 30vh;
+    left: 50%;
+    transform: translateX(-50%);
+    visibility: visible;
+    z-index: 1;
+}
+
+#login_success_box_close_btn,
+#create_task_success_box_close_btn {
+    display: block;
+    background-color: #676565;
+    color: #ffffff;
+    margin-left: 80%;
+    box-shadow: 0 0 6px rgb(46, 46, 46);
+    border: none;
+    padding: 10px;
+    margin-top: 20px;
+    font-family: cursive;
+}
+
 #user_name:hover,
 #user_logout_form_box:hover,
-#profile_verify_box button:hover {
+#login_success_box_close_btn:hover,
+#create_task_success_box_close_btn:hover {
     cursor: pointer;
     transform: scale(1.12);
 }
 
-#profile_box,
 #task_box {
     position: absolute;
-    height: fit-content;
-    width: fit-content;
-    min-width: 90vw;
-    min-height: 85vh;
-    left: 5vw;
-    top: 10vh;
-    background-color: rgba(52, 53, 53, 0.205);
-    box-shadow: 0 0 6px rgb(230, 230, 230);
-
-}
-
-#task_box {
-    visibility: visible;
-}
-
-#profile_box {
-    top: -1000px;
-    visibility: hidden;
-}
-
-#task_tab_box {
-    width: fit-content;
-    height: fit-content;
-    position: relative;
-    display: flex;
-    flex-direction: row;
-    background-color: rgba(52, 53, 53, 0.205);
-    box-shadow: 0 0 6px rgb(230, 230, 230);
-    color: white;
-
-}
-
-#show_tasks_tab {
-    display: inline-block;
-    padding: 15px;
-    color: white;
-    background-color: #00000059;
-
-
-}
-
-#create_task_tab {
-    padding: 15px;
-    display: inline-block;
-    color: white;
-    background-color: #34353534;
-
-}
-
-#edit_task_tab {
-    padding: 15px;
-    display: inline-block;
-    color: white;
-    background-color: #34353534;
-
-}
-
-#show_tasks_box,
-#create_task_box,
-#edit_task_box {
-    margin-top: 15px;
     height: fit-content;
     width: fit-content;
     left: 50%;
-    transform: translateX(-50%);
+    top: 20vh;
     background-color: rgba(52, 53, 53, 0.205);
     box-shadow: 0 0 6px rgb(230, 230, 230);
-    position: absolute;
+    visibility: visible;
+    color: white;
+    transform: translateX(-50%);
+    padding: 30px;
+
 }
 
-#show_tasks_box {
-    top: 30%;
-    visibility: visible;
+#search_add_box {
+    display: block;
+    padding: 15px 0 15px 0;
+    position: relative;
+
+
 }
+
+#search_task_form {
+    display: inline-block;
+}
+
+#add_icon {
+    position: relative;
+    padding-left: 100px;
+    font-size: 25px;
+}
+
+#search_icon {
+    padding-left: 15px;
+    text-decoration: solid;
+}
+
+#search_area {
+    height: 35px;
+    width: 120px;
+    color: black;
+    padding-right: 15px;
+}
+
+#com_task_check {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: green;
+}
+
+#task_check {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: gray;
+}
+
+#com_task_title {
+    text-decoration: line-through;
+    padding: 15px;
+}
+
+#task_title {
+    padding: 15px;
+}
+
+table {
+    padding: 10px;
+    min-width: 240px;
+    width: fit-content;
+    background-color: rgba(52, 53, 53, 0.205);
+    box-shadow: 0 0 6px rgb(230, 230, 230);
+}
+
+#search_icon:hover,
+#add_icon:hover {
+    cursor: pointer;
+    transform: scale(1.12);
+}
+
+#empty_task {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: rgba(52, 53, 53, 0.205);
+    box-shadow: 0 0 6px rgb(230, 230, 230);
+}
+
+
+
+
+
 
 #create_task_box {
-    top: -1000px;
-    visibility: hidden;
-}
-
-#edit_task_box {
-    top: -1000px;
-    visibility: hidden;
-}
-
-.profile_edit_input_gray {
-    background-color: rgba(165, 160, 160, 0.582);
-    height: 40px;
-}
-
-.profile_edit_input_gray:hover {
-    cursor: not-allowed;
-}
-
-.profile_edit_input {
-    background-color: white;
-    height: 40px;
-}
-
-
-#profile_edit_content_form {
-    position: relative;
+    margin-top: 45px;
     height: fit-content;
     width: fit-content;
     left: 50%;
     transform: translateX(-50%);
+    background-color: rgba(52, 53, 53, 0.205);
+    box-shadow: 0 0 6px rgb(230, 230, 230);
+    position: absolute;
+    top: -1000px;
+    visibility: hidden;
+    padding: 15px;
 }
 
-#edit_user_submit {
+#edit_task_box {
+    margin-top: 45px;
+    height: fit-content;
+    width: fit-content;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(52, 53, 53, 0.205);
+    box-shadow: 0 0 6px rgb(230, 230, 230);
+    position: absolute;
+    top: 0px;
+    visibility: visible;
+    padding: 15px;
+}
+
+
+#edit_task_title,
+#create_task_title {
+    display: inline-block;
+}
+
+#edit_task_box_close,
+#create_task_box_close {
+    display: inline-block;
     position: relative;
+    left: 100%;
+    transform: translateX(-100%);
+}
+
+#edit_form_submit,
+#create_form_submit {
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
     background-color: #ffffffca;
     box-shadow: 0 0 4px rgba(255, 255, 255, 0.785);
     border: none;
@@ -154,9 +212,33 @@
     margin: 5px;
     color: #0d0000;
     font-family: cursive;
-    left: 50%;
-    transform: translateX(-50%);
 }
+
+#id_edit_complete,
+#id_complete {
+    position: relative;
+    bottom: -10px;
+    width: 20px;
+}
+
+#edit_form_submit:hover,
+#create_form_submit:hover {
+    cursor: pointer;
+    transform: scale(1.12);
+    left: 42%;
+}
+
+#edit_task_box_close:hover,
+#create_task_box_close:hover {
+    cursor: pointer;
+    transform: scale(1.12);
+    left: 96%;
+}
+
+
+
+
+
 
 #edit_user_submit:hover,
 #show_tasks_tab:hover,
@@ -168,40 +250,13 @@
     transform: scale(1.12);
 }
 
-#edit_user_submit:hover {
-    left: 43%;
+
+
+
+#complete_task_icon {
+    color: green;
 }
 
-
-#edit_success_box,
-#edit_failed_box {
-    background: rgb(255, 255, 255);
-    position: absolute;
-    width: fit-content;
-    height: fit-content;
-    font-size: large;
-    font-family: cursive;
-    padding: 20px 30px 10px 30px;
-    top: 40vh;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    visibility: visible;
-    z-index: 1;
-
-}
-
-
-#edit_success_box_close_btn,
-#edit_failed_box_close_btn {
-
-    display: block;
-    background-color: #676565;
-    color: #ffffff;
-    margin-left: 80%;
-    box-shadow: 0 0 6px rgb(46, 46, 46);
-    border: none;
-    padding: 10px;
-    margin-top: 20px;
-    font-family: cursive;
-
+#incomplete_task_icon {
+    color: gray;
 }

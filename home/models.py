@@ -1,15 +1,29 @@
 from django.db import models
-from phonenumber_field.modelfields import PhoneNumberField
+from django.contrib.auth.models import User
 
 # Create your models here.
 
-class Users(models.Model):
+class Tasks(models.Model):
+
+    priority_choices = [
+    ('1', '1'),
+    ('2', '2'),
+    ('3', '3'),
+    ('4', '4'),
+    ('5', '5'),
+    ('6', '6'),
+    ('7', '7'),
+    ('8', '8'),
+    ('9', '9'),
+    ('10', '10'),
+    ]
     
-    auto_increment_id = models.AutoField(primary_key=True)
-    user_name=models.CharField()
-    user_dob=models.DateField()
-    user_phone_code=models.CharField()
-    user_phone_number=PhoneNumberField(unique=True)
-    user_email=models.EmailField(unique=True)
-    user_password=models.CharField()
-    user_verify=models.BooleanField(default=False)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
+    title = models.CharField(max_length=150,null=True)
+    description = models.TextField(null=True, blank=True)
+    complete = models.BooleanField(default=False)
+    created = models.DateTimeField(auto_now_add=True)
+    priority = models.CharField(default='1',max_length=2 , choices=priority_choices)
+
+    class Meta:
+        ordering=["complete","priority","-created"]

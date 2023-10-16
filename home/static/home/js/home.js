@@ -117,55 +117,22 @@ register_submit.onclick = (e) => {
     menu_box.style.top = "-1000px";
     menu_box.style.visibility = "hidden";
 
-    let name = document.getElementById("id_user_name").value;
-    let dob = document.getElementById("id_user_dob").value;
-    let phone_number_1 = document.getElementById("id_user_phone_number_1").value;
-    let email = document.getElementById("id_user_email").value;
-    let password = document.getElementById("id_user_password").value;
-    let con_password = document.getElementById("id_user_con_password").value;
+    let username = document.getElementById("username").value;
+    let password = document.getElementById("password").value;
+    let con_password = document.getElementById("con_password").value;
 
     let form_register = document.getElementById("form_register");
 
-    var name1 = name.replaceAll(" ", "");
+    var username1 = username.replaceAll(" ", "");
 
-    if (!name1) {
-        return alert("Name Field cannot be empty!!!");
+    if (!username1) {
+        return alert("Username Field cannot be empty!!!");
     }
 
-    var check_name = isAlpha(name1);
+    var check_username = isAlphanum(username1);
 
-    if (!check_name) {
-        return alert("Enter a Valid Name!!!");
-    }
-
-    var dob1 = dob.replace(" ", "");
-
-    if (!dob1) {
-        return alert("Date-Of-Birth Field cannot be empty!!!");
-    }
-
-    var phone_1 = phone_number_1.replace(" ", "");
-
-    if (!phone_1) {
-        return alert("Phone Number Field cannot be empty!!!");
-    }
-
-    var check_phone_1 = isNumeric(phone_1);
-
-    if (!check_phone_1) {
-        return alert("Enter a Valid Phone Number!!!");
-    }
-
-    var email1 = email.replace(" ", "");
-
-    if (!email1) {
-        return alert("Email Field cannot be empty!!!");
-    }
-
-    var mailFormat = /\S+@\S+\.\S+/;
-
-    if (!email1.match(mailFormat)) {
-        return alert("Enter a Valid Email !!!");
+    if (!check_username) {
+        return alert("Enter a Valid Username!!!");
     }
 
     if (password.length < 8) {
@@ -181,12 +148,8 @@ register_submit.onclick = (e) => {
 
 }
 
-function isAlpha(str) {
-    return /^[a-zA-Z]*$/.test(str);
-}
-
-function isNumeric(str) {
-    return /^\d+$/.test(str);
+function isAlphanum(str) {
+    return /^[a-zA-Z0-9]*$/.test(str);
 }
 
 let registered_success_box = document.getElementById("registered_success_box");

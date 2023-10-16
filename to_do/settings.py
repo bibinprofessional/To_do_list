@@ -38,7 +38,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'home',
-    'phonenumber_field',
 ]
 
 MIDDLEWARE = [
@@ -78,7 +77,7 @@ WSGI_APPLICATION = 'to_do.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'to_do_list',
+        'NAME': 'to_do',
         'USER': 'bibin',
         'PASSWORD': 'Extention@1',
         'PORT': '5433',
